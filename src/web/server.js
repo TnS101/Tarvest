@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const db = require('../db/db');
+const db = require('../data/context');
 
-const route = require('../routes/main-router');
+const route = require('./routes/main-router');
 const movieRouter = route('movie');
 
 const app = express();

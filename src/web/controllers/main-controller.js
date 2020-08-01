@@ -1,7 +1,7 @@
 function exe(model) {
-    const Entity = require(`../db/models/${model}-model`);
-    const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
+    const Entity = require('../common').getModels(model);
 
+    const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
     create = (req, res) => {
         const body = req.body;
 
