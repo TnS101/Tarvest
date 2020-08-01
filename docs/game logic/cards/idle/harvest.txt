@@ -1,0 +1,4 @@
+Each Card (as a Crop) drops its self, numerous amount of seeds and xp.
+Each Card has a set timer (grow time in seconds).
+Each Card takes 1 free spot of land in your garden.
+

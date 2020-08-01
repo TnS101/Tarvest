@@ -1,0 +1,4 @@
+fire -> +2 dmg on unleash
+earth -> +2 shield on unleash
+water -> +2 mana on unleash
+wind -> draw 2 cards, discard 1 card on unleash
