@@ -2,4 +2,8 @@ function getModels(model) {
     return require(`../data/models/${model}-model`);
 }
 
-module.exports = { getModels };
+function getLogic(model) {
+    return require(`../app/${model}`);
+}
+
+module.exports = { getModels, getLogic };

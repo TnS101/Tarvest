@@ -1,5 +1,6 @@
 function exe(model) {
-    const Entity = require('../modules').getModels(model);
+    const modules = require('../modules');
+    const Entity = modules.getModels(model);
     const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
 
     create = (req, res) => {
@@ -11,7 +12,7 @@ function exe(model) {
                 error: `You must provide a ${entityName}`,
             })
         }
-        const entity = new Entity(body);
+        const entity = new Entity(body)
 
         if (!entity) {
             return res.status(400).json({ success: false, error: err })
@@ -20,6 +21,8 @@ function exe(model) {
         entity
             .save()
             .then(() => {
+                applyLogic(req.params, Entity, 'create');
+
                 return res.status(201).json({
                     success: true,
                     id: entity._id,
@@ -62,6 +65,8 @@ function exe(model) {
             entity
                 .save()
                 .then(() => {
+                    applyLogic(req.params, Entity, 'update');
+
                     return res.status(200).json({
                         success: true,
                         id: entity._id,
@@ -89,6 +94,7 @@ function exe(model) {
                     .json({ success: false, error: `${entityName} not found` })
             }
 
+            applyLogic(req.params, Entity, 'delete');
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
@@ -124,6 +130,12 @@ function exe(model) {
         }).catch(err => console.log(err))
     }
     return { create, update, deleteE, getSingle, getMultiple }
+}
+
+function applyLogic(params, entity, reqType) {
+    if (!params.action) {
+        modules.getLogic(model).exe(action, params._id, params.ownerId, entity, reqType)
+    }
 }
 
 module.exports = exe;
