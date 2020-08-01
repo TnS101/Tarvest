@@ -8,8 +8,9 @@ function route(route) {
     router.post(`/${route}`, controller.create);
     router.put(`/${route}/:id`, controller.update);
     router.delete(`/${route}/:id`, controller.deleteE);
+
     router.get(`/${route}/:id`, controller.getSingle);
-    router.get(`/${route}/:name`, controller.getSingle);
+    router.get(`/${route}/name/:name`, controller.getSingle);
     router.get(`/${routeCC}`, controller.getMultiple);
     router.get(`/${routeCC}/sort/:criteria/:order`, controller.getMultiple);
     router.get(`/${routeCC}/filter/:keyword/:value`, controller.getMultiple);

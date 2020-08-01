@@ -1,9 +1,9 @@
 function exe(model) {
-    const Entity = require('../common').getModels(model);
-
+    const Entity = require('../modules').getModels(model);
     const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
+
     create = (req, res) => {
-        const body = req.body;
+        const body = req.body
 
         if (!body) {
             return res.status(400).json({
@@ -94,7 +94,9 @@ function exe(model) {
     }
 
     getSingle = async(req, res) => {
-        await Entity.findOne({ _id: req.params.id }, (err, entity) => {
+        const query = req.params.id == undefined ? { name: req.params.name } : { _id: req.params.id }
+
+        await Entity.findOne(query, (err, entity) => {
             if (err) {
                 return res.status(400).json({ success: false, error: err })
             }
