@@ -1,4 +1,4 @@
-const User = require('./modules').getModel('user');
+const User = require('../modules').getModel('user');
 
 export function login() {
 
