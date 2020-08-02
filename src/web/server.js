@@ -4,8 +4,6 @@ const cors = require('cors');
 
 const db = require('../data/context');
 
-const router = require('./routes/main-router');
-
 const app = express();
 const apiPort = 3000;
 
@@ -28,8 +26,9 @@ mapRoutes(['card', 'seed', 'crate', 'crop', 'user']);
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
 
 function mapRoutes(routes) {
+    const router = require('./routes/main-router');
+
     routes.reduce(function(acc, model) {
-        const route = router(model);
-        app.use('/api', route);
+        app.use('/api', router(model));
     }, 0);
 }

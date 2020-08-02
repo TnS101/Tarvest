@@ -21,7 +21,7 @@ function exe(model) {
         entity
             .save()
             .then(() => {
-                applyLogic(req.params, Entity, 'create');
+                applyLogic(req.params);
 
                 return res.status(201).json({
                     success: true,
@@ -65,7 +65,7 @@ function exe(model) {
             entity
                 .save()
                 .then(() => {
-                    applyLogic(req.params, Entity, 'update');
+                    applyLogic(req.params);
 
                     return res.status(200).json({
                         success: true,
@@ -94,7 +94,7 @@ function exe(model) {
                     .json({ success: false, error: `${entityName} not found` })
             }
 
-            applyLogic(req.params, Entity, 'delete');
+            applyLogic(req.params);
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
@@ -132,9 +132,10 @@ function exe(model) {
     return { create, update, deleteE, getSingle, getMultiple }
 }
 
-function applyLogic(params, entity, reqType) {
+function applyLogic(params) {
     if (!params.action) {
-        modules.getLogic(model).exe(action, params._id, params.ownerId, entity, reqType)
+        const action = params.action;
+        modules.getLogic(model, action)(action, params._id, params.ownerId);
     }
 }
 

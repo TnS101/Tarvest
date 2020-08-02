@@ -1,5 +1,4 @@
-function getModel(models) {
-    models.reduce(function(acc, curr) {
-        module.exports[curr] = require(`../data/models${curr}-mod`);
-    }, 0);
+function getModel(model) {
+    return require(`../data/models${model}-mod`);
 }
+module.exports = { getModel: getModel };
