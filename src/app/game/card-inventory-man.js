@@ -1,4 +1,4 @@
-async function exe(action, entity) {
+async function exe(action, id) {
 
     const modMan = require('../mod-man');
     const models = require('../modules');
@@ -7,14 +7,15 @@ async function exe(action, entity) {
     const CardInventoryModel = models.getModel('card-inventory');
     const UserModel = models.getModel('user');
 
-    const user = await modMan.getMod({ _id: entity.userId }, UserModel);
-    const card = await modMan.getMod({ _id: entity.cardId }, CardModel);
+    const inventory = await modMan.getMod({ _id: id }, CardInventoryModel);
+    const user = await modMan.getMod({ _id: inventory.userId }, UserModel);
+    const card = await modMan.getMod({ _id: inventory.cardId }, CardModel);
 
     if (action === 'loot') {
-        inventoryIncrement(entity, user._id, card._id, 1);
+        inventoryIncrement(inventory, user._id, card._id, 1);
 
     } else if (action === 'disolve') {
-        inventorySubstract(entity, 1);
+        inventorySubstract(inventory, 1);
         for (const key in user) {
             if (user.hasOwnProperty(card.onDisolve.rewardType)) {
                 user[key] += card.onDisolve.amount;
@@ -48,11 +49,11 @@ async function exe(action, entity) {
     function inventoryIncrement(inventory, userId, cardId, count) {
         if (!inventory) {
             inventory = new CardInventoryModel({ userId: userId, cardId: cardId, count: count });
-            inventory.save();
         } else {
-            inventory.count--;
-            inventory.save();
+            inventory.count++;
         }
+
+        inventory.save();
 
         user.inventorySpace -= count;
         user.save();

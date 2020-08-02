@@ -5,13 +5,13 @@ const User = new Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
     passwordHash: { type: String, required: true },
-    coins: { type: Number, required: true },
-    gems: { type: Number, required: true },
-    level: { type: Number, required: true },
-    xp: { type: Number, required: true },
-    xpCap: { type: Number, required: true },
-    inventorySpace: { type: Number, required: true },
-    lands: { type: [{ landId: String }], required: true },
+    coins: { type: Number, default: 100 },
+    gems: { type: Number, default: 10 },
+    level: { type: Number, default: 1 },
+    xp: { type: Number, default: 0 },
+    xpCap: { type: Number, default: 100 },
+    inventorySpace: { type: Number, default: 100 },
+    landsIds: { type: [String], required: true },
 
 }, { timestamps: true }, );
 

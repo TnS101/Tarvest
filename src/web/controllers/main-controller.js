@@ -3,7 +3,7 @@ function exe(model) {
     const Entity = modules.getModels(model);
     const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
 
-    create = (req, res) => {
+    create = async(req, res) => {
         const body = req.body
 
         if (!body) {
@@ -21,8 +21,6 @@ function exe(model) {
         entity
             .save()
             .then(async() => {
-                await applyLogic(req.params, entity, modules);
-
                 return res.status(201).json({
                     success: true,
                     id: entity._id,
@@ -36,6 +34,7 @@ function exe(model) {
                     message: `${entityName} not created!`,
                 })
             })
+        await applyLogic(req.params, entity._id, modules);
     }
 
     update = async(req, res) => {
@@ -65,7 +64,7 @@ function exe(model) {
             entity
                 .save()
                 .then(async() => {
-                    await applyLogic(req.params, entity, modules);
+                    await applyLogic(req.params, entity._id, modules);
 
                     return res.status(200).json({
                         success: true,
@@ -94,7 +93,7 @@ function exe(model) {
                     .status(404)
                     .json({ success: false, error: `${entityName} not found` })
             }
-            await applyLogic(req.params.action, entity, modules);
+            await applyLogic(req.params.action, entity._id, modules);
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
