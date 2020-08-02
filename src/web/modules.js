@@ -1,19 +1,22 @@
-function getModels(model) {
-    return require(`../data/models/${model}-mod`);
-}
-
-function getLogic(model, action) {
-    let foulder = '';
-
-    if (model != 'user') {
-        foulder = 'game';
-    } else if (model != 'comment' && model != 'topic') {
-        foulder = 'identity';
-    } else {
-        foulder = 'social';
+function exe(modelName) {
+    getModels = () => {
+        return require(`../data/models/${modelName}-mod`);
     }
 
-    require(`../app/${foulder}/${model}-man`)(action);
+    getLogic = async(action, entity) => {
+        let folder = '';
+
+        if (modelName != 'user') {
+            folder = 'game';
+        } else if (modelName != 'comment' && modelName != 'topic') {
+            folder = 'identity';
+        } else {
+            folder = 'social';
+        }
+        return await require(`../app/${folder}/${modelName}-man`)(action, entity);
+    }
+
+    return { getModels, getLogic };
 }
 
-module.exports = { getModels, getLogic };
+module.exports = { exe };

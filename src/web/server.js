@@ -21,7 +21,7 @@ app.use(express.json({
     type: ['application/json', 'text/plain']
 }));
 
-mapRoutes(['card', 'seed', 'crate', 'crop', 'user']);
+mapRoutes(['card', 'seed', 'crate', 'crop', 'user', 'card-inventory']);
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
 

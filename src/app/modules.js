@@ -1,4 +1,4 @@
 function getModel(model) {
-    return require(`../data/models${model}-mod`);
+    return require(`../data/models/${model}-mod`);
 }
-module.exports = { getModel: getModel };
+module.exports = { getModel };

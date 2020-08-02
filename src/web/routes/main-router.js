@@ -6,7 +6,6 @@ function route(route) {
     const router = express.Router();
 
     router.post(`/${route}`, controller.create);
-    router.post(`/${route}/:action`, controller.create);
 
     router.put(`/${route}/:id`, controller.update);
     router.put(`/${route}/:id/:action`, controller.update);

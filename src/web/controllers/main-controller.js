@@ -1,5 +1,5 @@
 function exe(model) {
-    const modules = require('../modules');
+    const modules = require('../modules').exe(model);
     const Entity = modules.getModels(model);
     const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
 
@@ -20,8 +20,8 @@ function exe(model) {
 
         entity
             .save()
-            .then(() => {
-                applyLogic(req.params);
+            .then(async() => {
+                await applyLogic(req.params, entity, modules);
 
                 return res.status(201).json({
                     success: true,
@@ -64,8 +64,8 @@ function exe(model) {
 
             entity
                 .save()
-                .then(() => {
-                    applyLogic(req.params);
+                .then(async() => {
+                    await applyLogic(req.params, entity, modules);
 
                     return res.status(200).json({
                         success: true,
@@ -83,7 +83,8 @@ function exe(model) {
     }
 
     deleteE = async(req, res) => {
-        await Entity.findOneAndDelete({ _id: req.params.id }, (err, entity) => {
+
+        await Entity.findOneAndDelete({ _id: req.params.id }, async(err, entity) => {
             if (err) {
                 return res.status(400).json({ success: false, error: err })
             }
@@ -93,8 +94,7 @@ function exe(model) {
                     .status(404)
                     .json({ success: false, error: `${entityName} not found` })
             }
-
-            applyLogic(req.params);
+            await applyLogic(req.params.action, entity, modules);
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
@@ -132,10 +132,9 @@ function exe(model) {
     return { create, update, deleteE, getSingle, getMultiple }
 }
 
-function applyLogic(params) {
-    if (!params.action) {
-        const action = params.action;
-        modules.getLogic(model, action)(action, params._id, params.ownerId);
+async function applyLogic(action, entity, modules) {
+    if (action) {
+        modules.getLogic(action, entity);
     }
 }
 
