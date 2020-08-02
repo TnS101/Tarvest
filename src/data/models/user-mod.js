@@ -11,8 +11,7 @@ const User = new Schema({
     xp: { type: Number, default: 0 },
     xpCap: { type: Number, default: 100 },
     inventorySpace: { type: Number, default: 100 },
-    landsIds: { type: [String], required: true },
-
+    bonuses: { type: [{ type: String, amount: Number }], required: false },
 }, { timestamps: true }, );
 
 module.exports = mongoose.model('users', User);

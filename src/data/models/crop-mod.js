@@ -12,6 +12,7 @@ const Crop = new Schema({
     xp: { type: Number, required: true },
     seeds: { type: Number, required: true },
     isUpside: { type: Boolean, required: true },
+    growTime: { type: Number, required: true },
 }, { timestamps: true }, );
 
 module.exports = mongoose.model('crops', Crop);
