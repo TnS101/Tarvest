@@ -7,8 +7,10 @@ function route(route) {
 
     router.post(`/${route}`, controller.create);
     router.post(`/${route}/:action`, controller.create);
+
     router.put(`/${route}/:id`, controller.update);
     router.put(`/${route}/:id/:action`, controller.update);
+
     router.delete(`/${route}/:id`, controller.deleteE);
     router.delete(`/${route}/:id/:action`, controller.deleteE);
 

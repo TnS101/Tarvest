@@ -4,8 +4,7 @@ const cors = require('cors');
 
 const db = require('../data/context');
 
-const route = require('./routes/main-router');
-const movieRouter = route('movie');
+const router = require('./routes/main-router');
 
 const app = express();
 const apiPort = 3000;
@@ -24,20 +23,13 @@ app.use(express.json({
     type: ['application/json', 'text/plain']
 }));
 
-app.use('/api', movieRouter);
+mapRoutes(['card', 'seed', 'crate', 'crop', 'user']);
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
 
-function routes(models) {
-    const routes = [];
-    models.split(', ').reduce(function(acc, model) {
-        result.push(route(model));
-    }, 0);
-    return routes;
-}
-
-function handlers(routes) {
-    routes.reduce(function(acc, route) {
+function mapRoutes(routes) {
+    routes.reduce(function(acc, model) {
+        const route = router(model);
         app.use('/api', route);
     }, 0);
 }

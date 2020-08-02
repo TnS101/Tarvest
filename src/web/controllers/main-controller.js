@@ -150,7 +150,7 @@ function mutate(data, keyword, value, criteria, order) {
         }
     }
 
-    if (keyword && value) data = data.filter(e => pSet(e, keyword) > value);
+    if (keyword && value) data = data.filter(e => pSet(e, keyword) >= value);
 
     if (criteria && order) {
         if (order == 'dsc') {

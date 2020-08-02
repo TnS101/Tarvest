@@ -1,0 +1,11 @@
+{
+    "name": "1",
+    "onCraft": {"ingredients":[{"id": "1", "amount": 1}, {"id": "2", "amount": 1}], "cost": [{"type": "coin", "amount": 1}], "rewardId": "3"},
+    "onDisolve": {"rewardType": "coin", "amount": 15},
+    "rank": 1,
+    "xp": 1,
+    "isUpside": true,
+    "element": "wind",
+    "manaCost": 0,
+    "isMajor": false
+}
