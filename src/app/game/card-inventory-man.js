@@ -1,15 +1,15 @@
-async function exe(action, id) {
+async function exe(action, res) {
 
-    const modMan = require('../mod-man');
+    const modMan = require('../mod-man').exe();
     const models = require('../modules');
 
     const CardModel = models.getModel('card');
     const CardInventoryModel = models.getModel('card-inventory');
     const UserModel = models.getModel('user');
 
-    const inventory = await modMan.getMod({ _id: id }, CardInventoryModel);
-    const user = await modMan.getMod({ _id: inventory.userId }, UserModel);
-    const card = await modMan.getMod({ _id: inventory.cardId }, CardModel);
+    const inventory = await modMan.getMod({ _id: res.id }, CardInventoryModel);
+    const user = await modMan.getMod({ _id: res.userId }, UserModel);
+    const card = await modMan.getMod({ _id: res.cardId }, CardModel);
 
     if (action === 'loot') {
         inventoryIncrement(inventory, user._id, card._id, 1);
@@ -60,11 +60,9 @@ async function exe(action, id) {
     }
 
     function inventorySubstract(inventory, count) {
-        if (inventory.count > count) {
+        if (inventory && inventory.count > count) {
             inventory.count -= count;
             inventory.save();
-        } else {
-            return;
         }
 
         user.inventorySpace += count;
@@ -72,4 +70,4 @@ async function exe(action, id) {
     }
 }
 
-module.exports = exe;
+module.exports = { exe };

@@ -13,7 +13,7 @@ function exe(modelName) {
         } else {
             folder = 'social';
         }
-        return await require(`../app/${folder}/${modelName}-man`)(action, entity);
+        return await require(`../app/${folder}/${modelName}-man`).exe(action, entity);
     }
 
     return { getModels, getLogic };

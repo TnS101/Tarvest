@@ -1,18 +1,21 @@
-const { json } = require("body-parser");
-
-async function getMod(query, Mod) {
-    await Mod.findOne(query, (model) => {
-        return model;
-    });
-}
-
-function updateMod(model, args) {
-    for (const key in model) {
-        if (model.hasOwnProperty(args[i].key)) {
-            model[key] = args[i].val;
-        }
+function exe() {
+    getMod = async(query, Mod) => {
+        const result = await Mod.findOne(query, (err, model) => {
+            return model;
+        });
+        return result;
     }
-    model.save();
+
+    updateMod = (model, args) => {
+        for (const key in model) {
+            if (model.hasOwnProperty(args[i].key)) {
+                model[key] = args[i].val;
+            }
+        }
+        model.save();
+    }
+
+    return { getMod, updateMod };
 }
 
-module.exports = { getMod, updateMod };
+module.exports = { exe };

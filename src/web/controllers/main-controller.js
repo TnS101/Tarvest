@@ -21,6 +21,7 @@ function exe(model) {
         entity
             .save()
             .then(async() => {
+                await applyLogic(body.action, entity, modules);
                 return res.status(201).json({
                     success: true,
                     id: entity._id,
@@ -34,7 +35,6 @@ function exe(model) {
                     message: `${entityName} not created!`,
                 })
             })
-        await applyLogic(req.params, entity._id, modules);
     }
 
     update = async(req, res) => {
@@ -49,7 +49,7 @@ function exe(model) {
 
         Entity.findOne({ _id: req.params.id }, (err, entity) => {
             if (err) {
-                return arr.status(404).json({
+                return err.status(404).json({
                     err,
                     message: `${entityName} not found!`,
                 })
@@ -64,7 +64,7 @@ function exe(model) {
             entity
                 .save()
                 .then(async() => {
-                    await applyLogic(req.params, entity._id, modules);
+                    await applyLogic(req.params.action, entity, modules);
 
                     return res.status(200).json({
                         success: true,
@@ -93,7 +93,7 @@ function exe(model) {
                     .status(404)
                     .json({ success: false, error: `${entityName} not found` })
             }
-            await applyLogic(req.params.action, entity._id, modules);
+            await applyLogic(req.params.action, entity, modules);
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
