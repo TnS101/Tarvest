@@ -1,7 +1,7 @@
-function exe(model) {
-    const modules = require('../modules').exe(model);
-    const Entity = modules.getModels(model);
-    const entityName = model.slice(0, 1).toLocaleUpperCase() + model.slice(1, model.length);
+function exe(modelName) {
+    const modules = require('../modules').exe(modelName);
+    const Entity = modules.getModels(modelName);
+    const entityName = modelName.slice(0, 1).toLocaleUpperCase() + modelName.slice(1, modelName.length);
 
     create = async(req, res) => {
         const body = req.body
@@ -21,7 +21,7 @@ function exe(model) {
         entity
             .save()
             .then(async() => {
-                await applyLogic(body.action, entity, modules);
+                await applyLogic(body.action, body.amount, entity, modules)
                 return res.status(201).json({
                     success: true,
                     id: entity._id,
@@ -64,7 +64,7 @@ function exe(model) {
             entity
                 .save()
                 .then(async() => {
-                    await applyLogic(req.params.action, entity, modules);
+                    await applyLogic(req.params.action, req.params.amount, entity, modules);
 
                     return res.status(200).json({
                         success: true,
@@ -93,7 +93,7 @@ function exe(model) {
                     .status(404)
                     .json({ success: false, error: `${entityName} not found` })
             }
-            await applyLogic(req.params.action, entity, modules);
+            await applyLogic(req.params.action, req.params.amount, entity, modules);
             return res.status(200).json({ success: true, data: entity })
         }).catch(err => console.log(err))
     }
@@ -131,9 +131,9 @@ function exe(model) {
     return { create, update, deleteE, getSingle, getMultiple }
 }
 
-async function applyLogic(action, entity, modules) {
+async function applyLogic(action, amount, res, modules) {
     if (action) {
-        modules.getLogic(action, entity);
+        modules.getLogic(action, amount, res);
     }
 }
 

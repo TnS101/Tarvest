@@ -1,7 +1,7 @@
 Hand Size: Unlimitted (Starting with 4 cards).
 Each turn you can either Draw 1 Card from your Deck, or gain +2 to your Energy Bar(Attack or Defence).
 Deck Size: 20 (14 Minor Arcana(Tarrot) Cards, 5 Spell Cards and 1 Major Arcana(Tarrot) Card, which represents your Player).
-Deck's (Arcana)Tarrot Section : Max of 6 Cards per Element and Maximum of 3 Duplicates (Example : 5 Fire, 5 Water, 4 Earth (5 + 5 + 4 + 1 = 15)).
+Deck's Construct : Max of 5 Cards per Element and Maximum of 3 Duplicates (Example : 5 Fire, 5 Water, 4 Earth (5 + 5 + 4 + 1 = 15)).
 No such thing as a Graveyard : When a card is Discarded, It cannot be used for the remainder of the Battle.
 When you have no cards in your Deck your Life is increasingly getting decremented (1,2,3,5,7,9, e.t.c) and you get a Random Card(Minor Arcana) in your Hand.
 An Upside Card is counted as an 'Attack' Card, a Downside Card is counted as an 'Defence' Card.

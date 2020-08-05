@@ -3,7 +3,7 @@ function exe(modelName) {
         return require(`../data/models/${modelName}-mod`);
     }
 
-    getLogic = async(action, entity) => {
+    getLogic = async(action, amount, res) => {
         let folder = '';
 
         if (modelName != 'user') {
@@ -13,7 +13,8 @@ function exe(modelName) {
         } else {
             folder = 'social';
         }
-        return await require(`../app/${folder}/${modelName}-man`).exe(action, entity);
+
+        return modelName.includes('inventory') ? await require(`../app/${folder}/inventory-mod-man`).exe(modelName, action, Number(amount), res) : await require(`../app/${folder}/${modelName}-man`).exe(modelName, action, Number(amount), res);
     }
 
     return { getModels, getLogic };

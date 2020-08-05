@@ -1,6 +1,6 @@
 {
-    "name": "1",
-    "onCraft": { "ingredients": [{ "id": "1", "amount": 1 }, { "id": "2", "amount": 1 }], "cost": [{ "type": "coin", "amount": 1 }], "rewardId": "3" },
+    "name": "Name",
+    "onCraft": { "ingredients": [{ "id": "1", "amount": 1 }, { "id": "2", "amount": 1 }], "cost": [{ "type": "coins", "amount": 1 }], "rewardId": "3" },
     "onDisolve": { "rewardType": "coins", "amount": 15 },
     "rank": 1,
     "xp": 1,
