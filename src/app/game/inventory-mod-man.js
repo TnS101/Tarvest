@@ -49,16 +49,34 @@ async function exe(modelName, action, amount, res) {
         user.save();
 
     } else if (action === 'sell') {
-        inventoryIncrement(inventory, user._id, card_id, amount);
-
+        inventorySubstract(inventory, amount);
         for (let i = 0; i < amount; i++) {
             user.coins += card.sell;
         }
-
         user.save();
+
+    } else if (action === 'buy') {
+        inventoryIncrement(inventory, user._id, card._id, amount);
+        for (let i = 0; i < amount; i++) {
+            user.coins -= card.sell;
+        }
+        user.save();
+    } else if (action === 'use') {
+        inventory.durability--;
+        inventory.save();
+
+        const cropInventory = modMan.getMod({ _id: res.cropId }, models.getModel('crop-inventory'));
+        const tool = modMan.getMod({ _id: inventory.toolId }, models.getModel('tool'));
+
+        cropInventory.bonuses = tool.bonuses;
+        cropInventory.save();
     }
 
     function inventoryIncrement(inventory, userId, cardId, amount) {
+        if (user.inventorySpace - amount < 0) {
+            amount = user.inventorySpace;
+        }
+
         if (!inventory) {
             inventory = new InventoryModel({ userId: userId, cardId: cardId, count: amount });
         } else {
@@ -71,9 +89,17 @@ async function exe(modelName, action, amount, res) {
     }
 
     function inventorySubstract(inventory, amount) {
-        if (inventory && inventory.amount > amount) {
-            inventory.amount -= amount;
-            inventory.save();
+        if (inventory) {
+            if (inventory.amount > amount) {
+                inventory.amount -= amount;
+                inventory.save();
+            } else if (inventory.amount === amount) {
+                Entity.findOneAndDelete({ _id: inventory._id }, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            }
         }
 
         user.inventorySpace += amount;
