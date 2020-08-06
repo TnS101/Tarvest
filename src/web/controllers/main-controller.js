@@ -99,7 +99,7 @@ function exe(modelName) {
     }
 
     getSingle = async(req, res) => {
-        const query = req.params.id == undefined ? { name: req.params.name } : { _id: req.params.id }
+        const query = req.params.id == undefined ? { username: req.params.name } : { _id: req.params.id }
 
         await Entity.findOne(query, (err, entity) => {
             if (err) {
@@ -128,7 +128,22 @@ function exe(modelName) {
             return res.status(200).json({ success: true, data: mutate(entities, req.params.keyword, req.params.value, req.params.criteria, req.params.order) })
         }).catch(err => console.log(err))
     }
-    return { create, update, deleteE, getSingle, getMultiple }
+
+    getMultipleByUserId = async(req, res) => {
+        await Entity.find({ userId: req.params.userId }, (err, entities) => {
+            if (err) {
+                return res.status(400).json({ success: false, error: err })
+            }
+            if (!entities.length) {
+                return res
+                    .status(404)
+                    .json({ success: false, error: `${entityName} not found` })
+            }
+            return res.status(200).json({ success: true, data: mutate(entities, req.params.keyword, req.params.value, req.params.criteria, req.params.order) })
+        }).catch(err => console.log(err))
+    }
+
+    return { create, update, deleteE, getSingle, getMultiple, getMultipleByUserId }
 }
 
 async function applyLogic(action, amount, res, modules) {

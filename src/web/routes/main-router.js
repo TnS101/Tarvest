@@ -15,7 +15,9 @@ function route(route) {
 
     router.get(`/${route}/:id`, controller.getSingle);
     router.get(`/${route}/name/:name`, controller.getSingle);
+
     router.get(`/${routeCC}`, controller.getMultiple);
+    router.get(`/${routeCC}/:userId`, controller.getMultipleByUserId);
     router.get(`/${routeCC}/sort/:criteria/:order`, controller.getMultiple);
     router.get(`/${routeCC}/filter/:keyword/:value`, controller.getMultiple);
     router.get(`/${routeCC}/filter/:keyword/:value/order/:criteria/:order`, controller.getMultiple);
