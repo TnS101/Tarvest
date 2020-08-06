@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ToolInventory = new Schema({
     userId: { type: String, required: true },
     toolId: { type: String, required: true },
+    durability: { type: Number, required: true },
     count: { type: Number, default: 1 },
 }, { timestamps: true }, );
 
