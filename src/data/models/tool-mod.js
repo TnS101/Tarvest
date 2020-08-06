@@ -7,6 +7,7 @@ const Tool = new Schema({
     sell: { type: Number, required: true },
     durability: { type: Number, required: true },
     bonuses: { type: [{ type: String, amount: Number }], required: false },
+    image: { type: String, required: true },
 }, { timestamps: true }, );
 
 module.exports = mongoose.model('tools', Tool);

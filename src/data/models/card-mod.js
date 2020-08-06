@@ -10,6 +10,7 @@ const Card = new Schema({
     isUpside: { type: Boolean, required: true },
     element: { type: String, required: true },
     manaCost: { type: Number, required: true },
+    image: { type: String, required: true },
     isMajor: { type: Boolean, required: true },
 }, { timestamps: true }, );
 
