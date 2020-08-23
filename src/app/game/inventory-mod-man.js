@@ -61,6 +61,7 @@ async function exe(modelName, action, amount, res) {
             user.coins -= card.sell;
         }
         user.save();
+
     } else if (action === 'use') {
         inventory.durability--;
         inventory.save();
