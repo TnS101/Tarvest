@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
+import 'react-table-6/react-table.css';
 import api from '../api';
 import columnBuilder from '../utilities/column-builder';
 
@@ -40,9 +41,8 @@ export default class cardList extends React.Component {
             showTable = false;
         }
 
-        return (
-            <div>
-            {showTable &&(
+        return <div>
+            {showTable &&
                 <ReactTable
                     data = {cards}
                     columns = {columns}
@@ -51,8 +51,7 @@ export default class cardList extends React.Component {
                     showPageSizeOptions = {true}
                     minRows = {0}
                 />
-            )}
+            }
             </div>
-        );
     }
 }
